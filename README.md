@@ -5,6 +5,6 @@
 
 # Description
 * Audio files are streamed as byte arrays and concurrently processed in 2 ways
-⋅⋅1. Bytes are written to an audio mixer and played back
-⋅⋅2. The fourier transform of the bytes is calculated and plotted in real-time
+  1. Bytes are written to an audio mixer and played back
+  2. The fourier transform of the bytes is calculated and plotted in real-time
 * The fourier transform shows which frequencies make up the sound wave at each point in time
