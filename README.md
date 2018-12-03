@@ -12,3 +12,7 @@
   1. Bytes are written to an audio mixer and played back
   2. The fourier transform of the bytes is calculated and plotted in real-time
 * The fourier transform shows which frequencies make up the sound wave at each point in time
+
+# Preview
+![FFT1](https://i.ibb.co/M7S1Vv6/fft1.png)
+![FFT2](https://i.ibb.co/mhMVz1Z/fft2.png)
