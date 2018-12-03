@@ -3,6 +3,10 @@
 * sbt: https://www.scala-sbt.org/1.x/docs/Setup.html
 * Suitable IDE (i.e. Eclipse or Intellij)
 
+# Technologies Used
+* Scala
+* Akka
+
 # Description
 * Audio files are streamed as byte arrays and concurrently processed in 2 ways
   1. Bytes are written to an audio mixer and played back
