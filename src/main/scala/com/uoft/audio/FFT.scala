@@ -2,25 +2,21 @@ package com.uoft.audio
 
 import breeze.math.Complex
 import breeze.numerics.abs
-import com.typesafe.config.{Config, ConfigFactory}
 import com.uoft.audio.Utilities.log2
 import scala.io.Source
 
 object FFT {
-  val conf: Config = ConfigFactory.load()
-
-  // Lookup table to find the bit-reversed value for all integers within a given range
-  val bitReverseLookup: Array[Int] = Source
-    .fromResource(conf.getString("audio.bit-reverse-lookup"))
-    .getLines.next.split(",")
-    .map(_.toInt)
-
-  // Return the bit-reversed order of an array and cast all values to complex numbers
+  // Return the bit-reversed order of an array
   // These values will be used to calculate the fourier transform of an audio signal
-  def bitReverseComplexCopy(array: Array[Double]): Array[Complex] = {
+  def bitReverseCopy(array: Array[Double], n: Int): Array[Double] = {
+    val bitReverseLookup = Source
+      .fromResource("lookups/bit_reverse_lookup_" + n)
+      .getLines.next.split(",")
+      .map(_.toInt)
+
     array
       .zipWithIndex
-      .map(t => Complex(array(bitReverseLookup(t._2)), 0))
+      .map(t => array(bitReverseLookup(t._2)))
   }
 
   // Different windows to be used in the fourier transform algorithm
@@ -42,7 +38,7 @@ object FFT {
     val windowedSignal: Array[Double] = signal
       .zipWithIndex
       .map(t => t._1 * window(t._2, n))
-    val fourierTransform: Array[Complex] = bitReverseComplexCopy(windowedSignal)
+    val fourierTransform: Array[Complex] = bitReverseCopy(windowedSignal, n).map(Complex(_, 0))
 
     for (s <- 1 to log2(n.toDouble).toInt) {
       val m: Int = Math.pow(2, s).toInt
