@@ -5,8 +5,8 @@ import javax.sound.sampled._
 import javax.swing.JFrame
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import com.typesafe.config.{Config, ConfigFactory}
-import com.uoft.audio.FFT.{fastFourierTransform, identityWindow}
-import com.uoft.audio.Utilities.{bufferProcessBytes, listWavFiles, numBytesInTimeInterval, separateChannels}
+import FFT.{fastFourierTransform, identityWindow}
+import Utilities.{bufferProcessBytes, listWavFiles, numBytesInTimeInterval, separateChannels}
 
 // Actor reads audio stream into a buffer and then passes it along
 object AudioReader {

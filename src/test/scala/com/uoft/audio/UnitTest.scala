@@ -2,10 +2,10 @@ package com.uoft.audio
 
 import java.io.File
 import javax.sound.sampled.{AudioInputStream, AudioSystem}
-import com.typesafe.config.{Config, ConfigFactory}
-import com.uoft.audio.FFT.bitReverseCopy
-import com.uoft.audio.Utilities.{listWavFiles, numBytesInTimeInterval, separateChannels, bufferProcessBytes}
 import org.scalatest.FunSuite
+import com.typesafe.config.{Config, ConfigFactory}
+import FFT.bitReverseCopy
+import Utilities.{listWavFiles, numBytesInTimeInterval, separateChannels, bufferProcessBytes}
 
 class UnitTest extends FunSuite {
   val conf: Config = ConfigFactory.load()

@@ -2,8 +2,8 @@ package com.uoft.audio
 
 import breeze.math.Complex
 import breeze.numerics.abs
-import com.uoft.audio.Utilities.log2
 import scala.io.Source
+import Utilities.log2
 
 object FFT {
   // Return the bit-reversed order of an array
