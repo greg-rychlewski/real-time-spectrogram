@@ -1,7 +1,9 @@
-import Utilities.log2
+package com.uoft.audio
+
 import breeze.math.Complex
 import breeze.numerics.abs
-import com.typesafe.config.{ConfigFactory, Config}
+import com.typesafe.config.{Config, ConfigFactory}
+import com.uoft.audio.Utilities.log2
 import scala.io.Source
 
 object FFT {

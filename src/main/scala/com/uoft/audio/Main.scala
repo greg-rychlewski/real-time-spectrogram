@@ -1,10 +1,12 @@
+package com.uoft.audio
+
 import java.io._
 import javax.sound.sampled._
 import javax.swing.JFrame
-import com.typesafe.config.{Config, ConfigFactory}
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import Utilities.{bufferProcessBytes, listWavFiles, numBytesInTimeInterval, separateChannels}
-import FFT.{fastFourierTransform, hammingWindow, hannWindow, identityWindow}
+import com.typesafe.config.{Config, ConfigFactory}
+import com.uoft.audio.FFT.{fastFourierTransform, identityWindow}
+import com.uoft.audio.Utilities.{bufferProcessBytes, listWavFiles, numBytesInTimeInterval, separateChannels}
 
 // Actor reads audio stream into a buffer and then passes it along
 object AudioReader {
@@ -28,9 +30,9 @@ class AudioReader(
                    playerActor: ActorRef,
                    plotterActor: ActorRef
                  ) extends Actor {
-  import AudioReader._
   import AudioPlayer._
   import AudioPlotter._
+  import AudioReader._
 
   // Variables originally set to null. They will be set once the actor receives a message
   var stream: AudioInputStream = _
@@ -170,38 +172,36 @@ class AudioPlotter(songList: Array[String]) extends Actor  {
   }
 }
 
-object Main {
-  def main(args: Array[String]): Unit = {
-    import AudioReader._
-    import AudioPlotter._
+object Main extends App {
+  import AudioPlotter._
+  import AudioReader._
 
-    val conf: Config = ConfigFactory.load()
+  val conf: Config = ConfigFactory.load()
 
-    // Get list of all wav files in music folder
-    // The first song played will be determined by alphabetical order
-    val musicFolder: String = conf.getString("audio.music-folder")
-    val songList: Array[String] = listWavFiles(new File(musicFolder))
-    val firstSong: String = songList(0)
+  // Get list of all wav files in music folder
+  // The first song played will be determined by alphabetical order
+  val musicFolder: String = conf.getString("audio.music-folder")
+  val songList: Array[String] = listWavFiles(new File(musicFolder))
+  val firstSong: String = songList(0)
 
-    // Initialize actor system
-    val system: ActorSystem = ActorSystem("audio")
-    val plotter: ActorRef = system.actorOf(AudioPlotter.props(songList), "plotterActor")
-    val player: ActorRef = system.actorOf(AudioPlayer.props, "playerActor")
-    val reader: ActorRef = system.actorOf(
-      AudioReader.props(
-        conf.getInt("audio.sample-time"),
-        musicFolder,
-        player,
-        plotter
-      ),
-      "readerActor"
-    )
+  // Initialize actor system
+  val system: ActorSystem = ActorSystem("audio")
+  val plotter: ActorRef = system.actorOf(AudioPlotter.props(songList), "plotterActor")
+  val player: ActorRef = system.actorOf(AudioPlayer.props, "playerActor")
+  val reader: ActorRef = system.actorOf(
+    AudioReader.props(
+      conf.getInt("audio.sample-time"),
+      musicFolder,
+      player,
+      plotter
+    ),
+    "readerActor"
+  )
 
-    // Send message to plotter actor to initialize its reference to the reader and to initialize an empty graph
-    plotter ! InitReader(reader)
-    plotter ! InitGraph
+  // Send message to plotter actor to initialize its reference to the reader and to initialize an empty graph
+  plotter ! InitReader(reader)
+  plotter ! InitGraph
 
-    // Send message to reader to start reading the first song
-    reader ! InitStream(firstSong, first=true)
-  }
+  // Send message to reader to start reading the first song
+  reader ! InitStream(firstSong, first=true)
 }

@@ -1,8 +1,10 @@
+package com.uoft.audio
+
 import java.awt._
 import java.awt.event.{ActionEvent, ActionListener}
 import javax.swing.{JComboBox, JPanel}
 import akka.actor.ActorRef
-import AudioReader.InitStream
+import com.uoft.audio.AudioReader.InitStream
 
 class Graph(
              binWidth: Int,

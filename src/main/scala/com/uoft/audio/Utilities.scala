@@ -1,3 +1,5 @@
+package com.uoft.audio
+
 import java.io.File
 import javax.sound.sampled.AudioFormat
 
