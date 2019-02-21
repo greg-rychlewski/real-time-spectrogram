@@ -14,5 +14,4 @@
 * The fourier transform shows which frequencies make up the sound wave at each point in time
 
 # Preview
-![FFT1](https://i.ibb.co/M7S1Vv6/fft1.png)
-![FFT2](https://i.ibb.co/mhMVz1Z/fft2.png)
+[![Whistling](https://img.youtube.com/vi/8S3herpSUmk/0.jpg)](https://www.youtube.com/watch?v=8S3herpSUmk)
