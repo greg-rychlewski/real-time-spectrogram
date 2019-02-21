@@ -13,5 +13,5 @@
   2. The fourier transform of the bytes is calculated and plotted in real-time
 * The fourier transform shows which frequencies make up the sound wave at each point in time
 
-# Preview
+# Youtube Video
 [![Whistling](https://img.youtube.com/vi/8S3herpSUmk/0.jpg)](https://www.youtube.com/watch?v=8S3herpSUmk)
